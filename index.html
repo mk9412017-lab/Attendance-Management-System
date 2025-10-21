@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attendance Management System</title>
+  <style>
+    :root {
+      --dark-bg: #0a0f1c;
+      --dark-text: #f2f4ff;
+      --dark-header: #0b1a33;
+      --accent: #0078ff;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      background: var(--dark-bg);
+      color: var(--dark-text);
+      overflow-x: hidden;
+    }
+
+    header {
+      background-color: var(--dark-header);
+      color: white;
+      padding: 15px 10px;
+      font-size: 18px;
+      font-weight: 600;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      color: #66b3ff;
+      text-shadow: 0 0 8px #0078ff;
+      margin: 20px 0 8px;
+      font-size: 22px;
+    }
+
+    .background-animation {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 30% 30%, rgba(0,120,255,0.1), transparent 60%),
+                  radial-gradient(circle at 70% 70%, rgba(255,255,255,0.03), transparent 70%);
+      animation: moveBg 12s ease-in-out infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes moveBg {
+      from { transform: translate(0, 0); }
+      to { transform: translate(-15px, 15px); }
+    }
+
+    .btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 30px;
+      margin: 12px;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,120,255,0.7);
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 16px rgba(0,120,255,0.9);
+    }
+
+    .hidden { display: none; }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 15px;
+    }
+
+    iframe {
+      border: none;
+      border-radius: 10px;
+      width: 92%;
+      max-width: 650px;
+      height: 480px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    iframe.visible {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 16px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    }
+
+    .loader {
+      border: 4px solid rgba(255,255,255,0.2);
+      border-top: 4px solid #0078ff;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      margin: 30px auto 10px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    footer {
+      margin-top: 25px;
+      padding: 10px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    input {
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      width: 180px;
+      font-size: 16px;
+      text-align: center;
+      margin-top: 15px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      outline: none;
+    }
+
+
+
+#groupInfo {
+  font-size: 18px;
+  color: #00eaff;
+  text-shadow: 0 0 6px #00eaff;
+  margin-top: -5px;
+  margin-bottom: 20px;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <div class="background-animation"></div>
+  <header>Faculty of Technology and Education – Helwan University</header>
+  <h2>Attendance Management System</h2>
+
+<p id="groupInfo">HVT - 2026 G3 S1</p>
+
+
+  <!-- Main Menu -->
+  <div id="mainMenu">
+    <button class="btn" id="studentBtn">Student</button>
+    <button class="btn" id="teacherBtn">DR/TA</button>
+  </div>
+
+  <!-- Student Section -->
+  <div id="studentSection" class="hidden">
+    <div id="loader" class="loader"></div>
+    <div id="message">جارٍ التحقق من موقعك...</div>
+    <div class="form-container">
+      <iframe 
+        id="formFrame"
+        src="https://docs.google.com/forms/d/e/1FAIpQLSfbPkiNU2_6sSRFJziC3n-AZHP0t7Dd7g4xZmQAqFeF4TgqeA/viewform?embedded=true"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <button class="btn" id="backFromStudent">Back</button>
+  </div>
+
+  <!-- Teacher Section -->
+  <div id="teacherSection" class="hidden">
+    <h3>Enter course code to view sheet</h3>
+    <input type="text" id="courseCode" />
+    <button class="btn" id="openSheetBtn">Open Attendance Sheet</button>
+    <button class="btn" id="backFromTeacher">Back</button>
+  </div>
+
+  <footer>© 2025 Attendance Management System/ Mahmoud Kamel /– All Rights Reserved</footer>
+
+  <script>
+    const mainMenu = document.getElementById("mainMenu");
+    const studentSection = document.getElementById("studentSection");
+    const teacherSection = document.getElementById("teacherSection");
+    const studentBtn = document.getElementById("studentBtn");
+    const teacherBtn = document.getElementById("teacherBtn");
+    const backFromStudent = document.getElementById("backFromStudent");
+    const backFromTeacher = document.getElementById("backFromTeacher");
+    const message = document.getElementById("message");
+    const loader = document.getElementById("loader");
+    const formFrame = document.getElementById("formFrame");
+
+    // Google Sheet links by course code
+    const courseSheets = {
+      "901": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=1074940527",
+      "902": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=1002680668",
+      "903": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=2110745349",
+      "904": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=854326317",
+      "905": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=514584555",
+      "906": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=643608628",
+      "907": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=1971083302",
+      "908": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=1582239076"
+    };
+
+    const collegeLat = 30.224647;
+    const collegeLon = 31.327039;
+
+    function getDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+
+    studentBtn.onclick = () => {
+      mainMenu.classList.add("hidden");
+      studentSection.classList.remove("hidden");
+      verifyLocation();
+    };
+
+    teacherBtn.onclick = () => {
+      mainMenu.classList.add("hidden");
+      teacherSection.classList.remove("hidden");
+    };
+
+    backFromStudent.onclick = () => {
+      studentSection.classList.add("hidden");
+      mainMenu.classList.remove("hidden");
+    };
+
+    backFromTeacher.onclick = () => {
+      teacherSection.classList.add("hidden");
+      mainMenu.classList.remove("hidden");
+    };
+
+    function verifyLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => {
+            const { latitude, longitude } = pos.coords;
+            const distance = getDistance(latitude, longitude, collegeLat, collegeLon);
+            loader.style.display = "none";
+
+            if (distance <= 0.2) {
+              message.textContent = "? تم التحقق: أنت داخل نطاق الكلية";
+              message.style.color = "limegreen";
+              setTimeout(() => formFrame.classList.add("visible"), 600);
+            } else {
+              message.textContent = "? تم الرفض: أنت خارج نطاق الكلية.";
+              message.style.color = "red";
+            }
+          },
+          () => {
+            loader.style.display = "none";
+            message.textContent = "?? تم رفض الوصول إلى الموقع.";
+          }
+        );
+      } else {
+        loader.style.display = "none";
+        message.textContent = "?? Geolocation not supported.";
+      }
+    }
+
+    document.getElementById("openSheetBtn").onclick = () => {
+      const code = document.getElementById("courseCode").value.trim();
+      if (courseSheets[code]) {
+        window.open(courseSheets[code], "_blank");
+      } else {
+        alert("?? كود المادة غير صحيح!");
+      }
+    };
+  </script>
+</body>
+</html>
