@@ -270,22 +270,22 @@
             loader.style.display = "none";
 
             if (distance <= 0.2) {
-              message.textContent = "? تم التحقق: أنت داخل نطاق الكلية";
+              message.textContent = " تم التحقق: أنت داخل نطاق الكلية";
               message.style.color = "limegreen";
               setTimeout(() => formFrame.classList.add("visible"), 600);
             } else {
-              message.textContent = "? تم الرفض: أنت خارج نطاق الكلية.";
+              message.textContent = " تم الرفض: أنت خارج نطاق الكلية.";
               message.style.color = "red";
             }
           },
           () => {
             loader.style.display = "none";
-            message.textContent = "?? تم رفض الوصول إلى الموقع.";
+            message.textContent = " تم رفض الوصول إلى الموقع.";
           }
         );
       } else {
         loader.style.display = "none";
-        message.textContent = "?? Geolocation not supported.";
+        message.textContent = " Geolocation not supported.";
       }
     }
 
@@ -300,4 +300,5 @@
   </script>
 </body>
 </html>
+
 
