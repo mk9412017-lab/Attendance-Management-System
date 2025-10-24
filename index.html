@@ -1,14 +1,23 @@
 ﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- لتحسين عرض الموقع على الهواتف -->
+  <!-- تحسين الظهور في جوجل ومحركات البحث -->
+<meta name="description" content="Online Attendance Management System for Helwan University - Faculty of Technology and Education - HVT 2026 G3 S1">
+<meta name="keywords" content="Attendance, Helwan University, HVT 2026, Students, Technology and Education, Mahmoud Kamel">
+<meta name="author" content="Mahmoud Kamel">
+
+<!-- لتحسين عرض الموقع على الهواتف -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- وصف الموقع لتحسين محركات البحث -->
-<meta name="description" content=" HVT-2026 G3 S1 ">
-<meta name="keywords" content="Attendance, System, Students, Online">
+<!-- معلومات المشاركة على السوشيال ميديا (Facebook / WhatsApp / Telegram) -->
+<meta property="og:title" content="Attendance Management System - HVT 2026 G3 S1">
+<meta property="og:description" content="Online Attendance System created by Mahmoud Kamel for Helwan University students.">
+<meta property="og:url" content="https://mk9412017-lab.github.io/attendance-system-2026/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://mk9412017-lab.github.io/attendance-system-2026/preview.png">
+
+<!-- (اختياري بعد التسجيل في Google Search Console) -->
+<!-- <meta name="google-site-verification" content="ضع هنا الكود الذي يعطيك إياه جوجل بعد التسجيل في Search Console" /> -->
 
   <title>Attendance Management System</title>
   <style>
@@ -269,7 +278,7 @@
             const distance = getDistance(latitude, longitude, collegeLat, collegeLon);
             loader.style.display = "none";
 
-            if (distance <= 0.2) {
+            if (distance <= 0.08) {
               message.textContent = " تم التحقق: أنت داخل نطاق الكلية";
               message.style.color = "limegreen";
               setTimeout(() => formFrame.classList.add("visible"), 600);
@@ -300,6 +309,7 @@
   </script>
 </body>
 </html>
+
 
 
 
