@@ -269,32 +269,33 @@
     };
 
     function verifyLocation() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            const { latitude, longitude } = pos.coords;
-            const distance = getDistance(latitude, longitude, collegeLat, collegeLon);
-            loader.style.display = "none";
-
-            if (distance <= 0.18) {
-              message.textContent = " تم التحقق: أنت داخل نطاق الكلية";
-              message.style.color = "limegreen";
-              setTimeout(() => formFrame.classList.add("visible"), 600);
-            } else {
-              message.textContent = " تم الرفض: أنت خارج نطاق الكلية.";
-              message.style.color = "red";
-            }
-          },
-          () => {
-            loader.style.display = "none";
-            message.textContent = " تم رفض الوصول إلى الموقع.";
-          }
-        );
-      } else {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const { latitude, longitude } = pos.coords;
+        const distance = getDistance(latitude, longitude, collegeLat, collegeLon);
         loader.style.display = "none";
-        message.textContent = " Geolocation not supported.";
-      }
-    }
+
+        if (distance <= 0.18) { // 180 متر
+          message.textContent = "✅ تم التحقق: أنت داخل نطاق الكلية.";
+          message.style.color = "limegreen";
+          setTimeout(() => formFrame.classList.add("visible"), 600);
+        } else {
+          message.textContent = "❌ تم الرفض: أنت خارج نطاق الكلية.";
+          message.style.color = "red";
+        }
+      },
+      () => {
+        loader.style.display = "none";
+        message.textContent = "⚠️ تم رفض الوصول إلى الموقع.";
+      },
+      { enableHighAccuracy: true, maximumAge: 60000, timeout: 10000 } // 👈 السطر الجديد
+    );
+  } else {
+    loader.style.display = "none";
+    message.textContent = "⚠️ جهازك لا يدعم تحديد الموقع الجغرافي.";
+  }
+}
 
     document.getElementById("openSheetBtn").onclick = () => {
       const code = document.getElementById("courseCode").value.trim();
@@ -307,6 +308,7 @@
   </script>
 </body>
 </html>
+
 
 
 
