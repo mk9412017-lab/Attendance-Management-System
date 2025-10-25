@@ -279,7 +279,7 @@
             const distance = getDistance(latitude, longitude, collegeLat, collegeLon);
             loader.style.display = "none";
 
-            if (distance <= 0.08) {
+            if (distance <= 0.18) {
               message.textContent = " تم التحقق: أنت داخل نطاق الكلية";
               message.style.color = "limegreen";
               setTimeout(() => formFrame.classList.add("visible"), 600);
@@ -310,6 +310,7 @@
   </script>
 </body>
 </html>
+
 
 
 
