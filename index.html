@@ -235,40 +235,44 @@
       "908": "https://docs.google.com/spreadsheets/d/1v4AlFpVeBymHIwMgEEVIT3iUgtAM2QeTz1OEegaa4t0/edit#gid=1582239076"
     };
 
-    const collegeLat = 30.1040372;
-    const collegeLon = 31.2942036;
+  const collegeLat = 30.1040372;
+const collegeLon = 31.2942036;
 
-    function getDistance(lat1, lon1, lat2, lon2) {
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = Math.sin(dLat/2)**2 + Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLon/2)**2;
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
-    }
+function getDistance(lat1, lon1, lat2, lon2) {
+  const R = 6371; // نصف قطر الأرض بالكيلومتر
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * Math.PI / 180) *
+      Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c; // الناتج بالكيلومتر
+}
 
-    studentBtn.onclick = () => {
-      mainMenu.classList.add("hidden");
-      studentSection.classList.remove("hidden");
-      verifyLocation();
-    };
+studentBtn.onclick = () => {
+  mainMenu.classList.add("hidden");
+  studentSection.classList.remove("hidden");
+  verifyLocation();
+};
 
-    teacherBtn.onclick = () => {
-      mainMenu.classList.add("hidden");
-      teacherSection.classList.remove("hidden");
-    };
+teacherBtn.onclick = () => {
+  mainMenu.classList.add("hidden");
+  teacherSection.classList.remove("hidden");
+};
 
-    backFromStudent.onclick = () => {
-      studentSection.classList.add("hidden");
-      mainMenu.classList.remove("hidden");
-    };
+backFromStudent.onclick = () => {
+  studentSection.classList.add("hidden");
+  mainMenu.classList.remove("hidden");
+};
 
-    backFromTeacher.onclick = () => {
-      teacherSection.classList.add("hidden");
-      mainMenu.classList.remove("hidden");
-    };
+backFromTeacher.onclick = () => {
+  teacherSection.classList.add("hidden");
+  mainMenu.classList.remove("hidden");
+};
 
-    function verifyLocation() {
+function verifyLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (pos) => {
@@ -276,10 +280,10 @@
         const distance = getDistance(latitude, longitude, collegeLat, collegeLon);
         loader.style.display = "none";
 
-        if (distance <= 0.18) { // 180 متر
+        if (distance <= 0.2) { // ✅ 200 متر
           message.textContent = "✅ تم التحقق: أنت داخل نطاق الكلية.";
           message.style.color = "limegreen";
-          setTimeout(() => formFrame.classList.add("visible"), 600);
+          setTimeout(() => formFrame.classList.add("visible"), 300);
         } else {
           message.textContent = "❌ تم الرفض: أنت خارج نطاق الكلية.";
           message.style.color = "red";
@@ -288,14 +292,14 @@
       () => {
         loader.style.display = "none";
         message.textContent = "⚠️ تم رفض الوصول إلى الموقع.";
-      },
-      { enableHighAccuracy: true, maximumAge: 60000, timeout: 10000 } // 👈 السطر الجديد
+      }
     );
   } else {
     loader.style.display = "none";
     message.textContent = "⚠️ جهازك لا يدعم تحديد الموقع الجغرافي.";
   }
 }
+
 
     document.getElementById("openSheetBtn").onclick = () => {
       const code = document.getElementById("courseCode").value.trim();
@@ -308,6 +312,7 @@
   </script>
 </body>
 </html>
+
 
 
 
