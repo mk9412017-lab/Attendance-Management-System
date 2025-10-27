@@ -169,6 +169,31 @@
   margin-bottom: 20px;
 }
 
+.signature {
+  text-align: center;
+  margin-top: 10px;
+  color: #00bfff; /* نفس لون العنوان الأزرق */
+  font-style: italic;
+  font-size: 16px;
+  text-shadow: 0 0 6px rgba(0, 191, 255, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+  border-right: 2px solid rgba(0, 191, 255, 0.9);
+  animation: typing 3s steps(14) 1s forwards, glow 3s ease-in-out infinite alternate;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 160px; }
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px rgba(0, 191, 255, 0.3); opacity: 0.85; }
+  to { text-shadow: 0 0 12px rgba(0, 191, 255, 0.9); opacity: 1; }
+}
+
+    
 
   </style>
 </head>
@@ -184,7 +209,7 @@
   <!-- Main Menu -->
   <div id="mainMenu">
     <button class="btn" id="studentBtn">Student</button>
-    <button class="btn" id="teacherBtn">DR/TA</button>
+    <button class="btn" id="teacherBtn">DR/T.A</button>
   </div>
 
   <!-- Student Section -->
@@ -209,7 +234,12 @@
     <button class="btn" id="backFromTeacher">Back</button>
   </div>
 
-  <footer>© 2025 Attendance Management System/ Mahmoud Kamel /– All Rights Reserved</footer>
+<footer>
+  <p>© 2025 Attendance Management System | All rights reserved</p>
+</footer>
+
+<div class="signature">Mahmoud Kamel</div>
+
 
   <script>
     const mainMenu = document.getElementById("mainMenu");
@@ -312,6 +342,7 @@ function verifyLocation() {
   </script>
 </body>
 </html>
+
 
 
 
