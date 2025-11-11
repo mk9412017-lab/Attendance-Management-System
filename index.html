@@ -316,7 +316,7 @@ function verifyLocation() {
         const distance = getDistance(latitude, longitude, collegeLat, collegeLon);
         loader.style.display = "none";
 
-        if (distance <= 0.2) { // ✅ 200 متر
+        if (distance <= 0.1) { // ✅ 200 متر
           message.textContent = "✅ تم التحقق: أنت داخل نطاق الكلية.";
           message.style.color = "limegreen";
           setTimeout(() => formFrame.classList.add("visible"), 300);
@@ -348,6 +348,7 @@ function verifyLocation() {
   </script>
 </body>
 </html>
+
 
 
 
